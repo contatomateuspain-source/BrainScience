@@ -1,5 +1,358 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-... (todo o código HTML acima) ...
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Perda de Memória — Pesquisa Científica & Estratégias</title>
+  <meta name="description" content="Página em tela cheia com síntese científica sobre perda de memória e sugestões práticas para fortalecer e recuperar a memória." />
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg-soft: #111936;
+      --card: #0f1a3a;
+      --text: #e7ecff;
+      --muted: #a7b1d9;
+      --brand: #6aa6ff;
+      --accent: #c3ff6a;
+      --danger: #ff6a6a;
+      --ok: #77f7b1;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    [data-theme="light"] {
+      --bg: #f3f6ff;
+      --bg-soft: #e9efff;
+      --card: #ffffff;
+      --text: #0e1b3d;
+      --muted: #445178;
+      --brand: #265dff;
+      --accent: #3aa76d;
+      --danger: #d13d3d;
+      --ok: #1e9e6f;
+      --shadow: 0 10px 20px rgba(0,0,0,.08);
+    }
+    html, body { height: 100%; }
+    body {
+      margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: linear-gradient(120deg, var(--bg) 0%, #0c1430 60%, #091226 100%);
+      color: var(--text);
+      display: flex; flex-direction: column;
+      min-height: 100vh;
+    }
+    .wrap { display: grid; grid-template-rows: auto 1fr auto; min-height: 100vh; }
+    header {
+      position: sticky; top: 0; z-index: 10;
+      backdrop-filter: blur(8px);
+      background: linear-gradient(180deg, rgba(0,0,0,.25), rgba(0,0,0,0));
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .nav {
+      max-width: 1200px; margin: 0 auto; padding: 16px 20px;
+      display: flex; align-items: center; gap: 12px; justify-content: space-between;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .logo {
+      width: 36px; height: 36px; border-radius: 10px; background: radial-gradient(circle at 30% 30%, var(--accent), var(--brand));
+      box-shadow: var(--shadow);
+    }
+    .brand h1 { font-size: 18px; margin: 0; letter-spacing: .3px; }
+    .nav a { color: var(--muted); text-decoration: none; font-weight: 600; margin: 0 8px; }
+    .nav a:hover { color: var(--text); }
+    .controls { display: flex; align-items: center; gap: 8px; }
+    .btn {
+      background: var(--brand); color: white; border: none; border-radius: 12px; padding: 10px 14px; cursor: pointer; font-weight: 700;
+      box-shadow: var(--shadow);
+    }
+    .btn.ghost { background: transparent; border: 1px solid rgba(255,255,255,.15); color: var(--text); }
+    .btn.ghost:hover { border-color: var(--brand); color: var(--brand); }
+
+    .hero {
+      max-width: 1200px; margin: 0 auto; padding: 48px 20px 24px;
+      display: grid; grid-template-columns: 1.05fr .95fr; gap: 24px; align-items: center;
+    }
+    .heroCard {
+      background: linear-gradient(180deg, var(--bg-soft), transparent);
+      border: 1px solid rgba(255,255,255,.08); border-radius: 20px; padding: 28px; box-shadow: var(--shadow);
+    }
+    .kpis { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 18px; }
+    .kpis div { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08); padding: 14px; border-radius: 14px; text-align: center; }
+    .kpis .num { font-size: 20px; font-weight: 800; }
+    .hero h2 { font-size: clamp(28px, 4vw, 44px); line-height: 1.05; margin: 0 0 10px; }
+    .hero p { margin: 0; color: var(--muted); }
+
+    .screen {
+      background: radial-gradient(1200px 600px at 80% -10%, rgba(106,166,255,.25), transparent 60%),
+                  radial-gradient(800px 400px at -20% 10%, rgba(195,255,106,.18), transparent 60%);
+      flex: 1; display: grid; place-items: stretch;
+    }
+    main {
+      max-width: 1200px; margin: 0 auto; padding: 12px 20px 36px; width: 100%;
+    }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .card {
+      background: var(--card); border: 1px solid rgba(255,255,255,.08); border-radius: 20px; padding: 22px; box-shadow: var(--shadow);
+    }
+    h3 { margin-top: 0; font-size: 20px; }
+    p, li { color: var(--text); opacity: .9; }
+    .muted { color: var(--muted); }
+    .badge { display: inline-block; padding: 6px 10px; border-radius: 999px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); font-size: 12px; font-weight: 700; color: var(--muted); }
+
+    details { border: 1px solid rgba(255,255,255,.12); border-radius: 14px; padding: 12px 14px; background: rgba(0,0,0,.15); }
+    summary { cursor: pointer; font-weight: 700; }
+
+    .list { display: grid; gap: 10px; }
+
+    .checklist label { display: grid; grid-template-columns: 22px 1fr 60px; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.04); }
+    .checklist input { width: 18px; height: 18px; }
+
+    .footer { max-width: 1200px; margin: 0 auto; padding: 24px 20px 40px; color: var(--muted); font-size: 14px; }
+
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size: 13px; color: var(--muted); }
+
+    /* Responsivo */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .grid, .two { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap" id="app">
+    <header>
+      <nav class="nav">
+        <div class="brand">
+          <div class="logo" aria-hidden="true"></div>
+          <h1>Memória Humana — Evidências & Práticas</h1>
+        </div>
+        <div class="controls">
+          <a href="#ciencia">Pesquisa</a>
+          <a href="#estrategias">Estratégias</a>
+          <a href="#exercicios">Exercícios</a>
+          <a href="#recursos">Recursos</a>
+          <button class="btn ghost" id="toggleTheme" aria-label="Alternar tema">Alternar tema</button>
+        </div>
+      </nav>
+    </header>
+
+    <section class="hero" role="banner">
+      <div class="heroCard">
+        <span class="badge">Síntese baseada em evidências</span>
+        <h2>Perda de memória: o que a ciência diz e como agir no dia a dia</h2>
+        <p>Esta página resume achados científicos sobre memória, explica causas comuns de esquecimento e propõe estratégias práticas para fortalecer a recordação. <strong>Não substitui avaliação médica.</strong></p>
+        <div class="kpis" aria-label="Destaques">
+          <div><div class="num">3</div><div class="muted">Pilares: sono, atenção, repetição</div></div>
+          <div><div class="num">20–30%</div><div class="muted">ganhos em lembrança com prática espaçada (estimativa em estudos)</div></div>
+          <div><div class="num">6–8h</div><div class="muted">janela típica de sono reparador adulto</div></div>
+        </div>
+      </div>
+      <div class="heroCard">
+        <h3 style="margin:0 0 8px">Foco rápido</h3>
+        <ul class="list" aria-label="Resumo rápido">
+          <li><strong>Memória depende de atenção</strong> (sem foco, o cérebro não codifica bem).</li>
+          <li><strong>Consolidação</strong> acontece principalmente durante o sono profundo REM/NREM.</li>
+          <li><strong>Repetição espaçada</strong> e <strong>prática de recuperação</strong> (lembrar sem olhar) fixam traços de memória.</li>
+          <li><strong>Estresse crônico</strong>, álcool em excesso, sedativos e deficiências (ex.: B12) podem prejudicar.</li>
+          <li>Procure avaliação se houver <em>instalação súbita</em>, <em>piora progressiva</em> ou <em>comprometimento funcional</em>.</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="screen">
+      <main>
+        <section id="ciencia" class="grid" aria-labelledby="h-ciencia">
+          <article class="card">
+            <h3 id="h-ciencia">Pesquisa científica, em linguagem simples</h3>
+            <p><strong>Como lembramos?</strong> A memória tem estágios: <em>codificação</em> (atenção transforma experiências em sinais neurais), <em>armazenamento</em> (estabilização de traços, com papel central do hipocampo) e <em>recuperação</em> (reativar o que foi guardado). O <strong>sono</strong> ajuda a consolidar lembranças, reativando padrões neurais. Repetir e recuperar a informação fortalece as conexões sinápticas (neuroplasticidade).</p>
+            <p><strong>Por que esquecemos?</strong> Esquecimento pode ocorrer por <em>decadência</em> (traço enfraquece sem uso), <em>interferência</em> (novas memórias competem com antigas) ou <em>falhas de atenção</em>. Fatores como estresse, ansiedade, depressão, privação de sono, consumo de álcool/sedativos, dor crônica, infecções e carências nutricionais contribuem. Alguns casos têm causa neurológica (ex.: TCE, epilepsia, doença de Alzheimer) e exigem avaliação médica.</p>
+            <details>
+              <summary>Fatores comuns que pioram a memória</summary>
+              <ul>
+                <li>Privação de sono ou sono irregular.</li>
+                <li>Estresse crônico, ansiedade e depressão.</li>
+                <li>Uso de álcool em excesso; benzodiazepínicos e outros sedativos.</li>
+                <li>Sedentarismo e doenças cardiovasculares (menos perfusão cerebral).</li>
+                <li>Deficiências: <em>vitamina B12</em>, <em>vitamina D</em>, <em>ferro</em>; hipotireoidismo.</li>
+                <li>Desidratação e má alimentação.</li>
+              </ul>
+            </details>
+            <p class="muted mono">Observação: este conteúdo é informativo e não substitui consulta com profissionais de saúde.</p>
+          </article>
+
+          <aside class="card" id="estrategias">
+            <h3>Estratégias práticas (baseadas em evidências)</h3>
+            <ol class="list">
+              <li><strong>Higiene do sono:</strong> deite e acorde em horários regulares; quarto escuro e silencioso; evite telas/estímulos intensos 60–90 min antes.</li>
+              <li><strong>Prática de recuperação:</strong> em vez de reler, feche o material e tente lembrar ativamente; corrija com o original.</li>
+              <li><strong>Repetição espaçada:</strong> revise em 1 dia, 3 dias, 1 semana e 1 mês; anote o que errou.</li>
+              <li><strong>Exercício físico aeróbico + força:</strong> 150 min/semana moderado; melhora fluxo sanguíneo e fatores neurotróficos.</li>
+              <li><strong>Nutrição e hidratação:</strong> priorize frutas, verduras, legumes, peixes/oleaginosas; reduza álcool; beba água ao longo do dia.</li>
+              <li><strong>Manejo do estresse:</strong> respiração 4-6, oração/meditação, journaling e pausas programadas (técnica Pomodoro).</li>
+              <li><strong>Mnemônicos e organização:</strong> acrônimos, imagens vívidas, histórias; use listas, calendários e lembretes visuais.</li>
+              <li><strong>Rotina cognitiva:</strong> ler, aprender habilidades, jogos de estratégia; limite multitarefa — <em>atenção única</em>.</li>
+              <li><strong>Revisão médica:</strong> checar B12, TSH, anemia; rever medicações sedativas; investigar apneia do sono se ronco/sonolência.</li>
+            </ol>
+            <div class="checklist" aria-label="Checklist diário">
+              <h4 style="margin-top:16px">Checklist diário</h4>
+              <label><input type="checkbox"/> Sono 7–9h</label>
+              <label><input type="checkbox"/> 30–45 min de atividade física</label>
+              <label><input type="checkbox"/> 2 sessões de prática de recuperação (10–15 min)</label>
+              <label><input type="checkbox"/> Pausas e respiração 4–6 (3× ao dia)</label>
+              <label><input type="checkbox"/> Hidratação adequada</label>
+            </div>
+          </aside>
+        </section>
+
+        <section id="exercicios" class="grid" aria-labelledby="h-exercicios" style="margin-top:20px">
+          <article class="card">
+            <h3 id="h-exercicios">Exercício 1 — Lista relâmpago (prática de recuperação)</h3>
+            <p>Veja as palavras por 15 segundos, depois tente relembrar sem olhar. Digite abaixo e confira sua pontuação.</p>
+            <div id="game1">
+              <div id="words" class="mono" style="border:1px dashed rgba(255,255,255,.2); padding:12px; border-radius:12px; margin-bottom:10px"></div>
+              <div style="display:flex; gap:8px; flex-wrap:wrap; margin:10px 0">
+                <button class="btn" id="start1">Mostrar palavras</button>
+                <button class="btn ghost" id="check1" disabled>Conferir</button>
+                <span id="timer" class="badge">⏳ 15s</span>
+              </div>
+              <textarea id="answer1" rows="5" placeholder="Digite aqui as palavras que lembrar (separe por vírgula)" style="width:100%; border-radius:12px; padding:12px; border:1px solid rgba(255,255,255,.15); background:rgba(0,0,0,.15); color:var(--text)"></textarea>
+              <div id="result1" class="muted" style="margin-top:8px"></div>
+            </div>
+          </article>
+
+          <article class="card">
+            <h3>Exercício 2 — Associação visual (mnemônico)</h3>
+            <p>Crie imagens mentais <em>absurdas</em> ligando pares; depois esconda e tente recordar. Clique para alternar visibilidade.</p>
+            <div id="pairs" class="two"></div>
+            <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap">
+              <button class="btn" id="newPairs">Gerar novos pares</button>
+              <button class="btn ghost" id="togglePairs">Mostrar/Esconder</button>
+            </div>
+          </article>
+        </section>
+
+        <section id="recursos" class="grid" aria-labelledby="h-recursos" style="margin-top:20px">
+          <article class="card">
+            <h3 id="h-recursos">Quando procurar ajuda profissional</h3>
+            <ul class="list">
+              <li>Início súbito de confusão, desorientação ou amnésia após trauma — <strong style="color:var(--danger)">emergência</strong>.</li>
+              <li>Perda de memória que <strong>piora progressivamente</strong> e afeta trabalho, estudos ou segurança.</li>
+              <li>Acompanhada de alterações neurológicas (fraqueza, fala arrastada, convulsões) — busque atendimento.</li>
+              <li>Uso crônico de sedativos/álcool; investigar apneia do sono se ronco+sonolência diurna.</li>
+            </ul>
+            <p class="muted">Profissionais úteis: clínica médica, neurologia, psiquiatria, geriatria, neuropsicologia, fonoaudiologia (reabilitação cognitiva).</p>
+          </article>
+
+          <aside class="card">
+            <h3>Plano de 4 semanas (modelo simples)</h3>
+            <ol class="list">
+              <li><strong>Semana 1 — Fundamentos:</strong> regular sono; reduzir multitarefa; iniciar caminhada 30 min/dia; primeira bateria de exames conforme médico.</li>
+              <li><strong>Semana 2 — Estruturar revisões:</strong> aplicar repetição espaçada em 2 temas da sua rotina (ex.: vocabulário, nomes, rotas).</li>
+              <li><strong>Semana 3 — Intensificar:</strong> incluir 2 treinos de força; praticar recuperação diária (10–15 min); registrar progresso.</li>
+              <li><strong>Semana 4 — Consolidar:</strong> revisar erros; ajustar horários; adicionar uma habilidade nova (instrumento, idioma, jogo de estratégia).</li>
+            </ol>
+            <p class="muted">Dica: mantenha um diário de esquecimentos e gatilhos percebidos; leve às consultas.</p>
+          </aside>
+        </section>
+      </main>
+    </div>
+
+    <footer class="footer">
+      <div>
+        <strong>Aviso:</strong> conteúdo educativo. Não substitui diagnóstico, prevenção ou tratamento. Em dúvida, procure um profissional de saúde.
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Alternar tema claro/escuro
+    const toggle = document.getElementById('toggleTheme');
+    const root = document.documentElement;
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) document.body.setAttribute('data-theme', savedTheme);
+    toggle.addEventListener('click', () => {
+      const next = document.body.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      document.body.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+
+    // Exercício 1 — Lista relâmpago
+    const wordsEl = document.getElementById('words');
+    const startBtn = document.getElementById('start1');
+    const checkBtn = document.getElementById('check1');
+    const ans = document.getElementById('answer1');
+    const res = document.getElementById('result1');
+    const timer = document.getElementById('timer');
+
+    const bank = [
+      'janela','rio','limão','violão','farol','nuvem','areia','trem','folha','chave','ponte','bolacha','relógio','café','mochila','abacate','neve','pipa'
+    ];
+    let current = [];
+    let hideTO = null, tickTO = null, remain = 15;
+    function sample(n){
+      const copy = [...bank];
+      const out = [];
+      for(let i=0;i<n && copy.length;i++){
+        const idx = Math.floor(Math.random()*copy.length);
+        out.push(copy.splice(idx,1)[0]);
+      }
+      return out;
+    }
+    function startGame(){
+      current = sample(10);
+      wordsEl.textContent = current.join(' · ');
+      ans.value = '';
+      res.textContent = '';
+      remain = 15; timer.textContent = `⏳ ${remain}s`;
+      checkBtn.disabled = true;
+      clearTimeout(hideTO); clearInterval(tickTO);
+      tickTO = setInterval(()=>{ remain--; timer.textContent = `⏳ ${remain}s`; if(remain<=0){clearInterval(tickTO);} },1000);
+      hideTO = setTimeout(()=>{
+        wordsEl.textContent = '⌛ Agora tente lembrar e digitar!';
+        checkBtn.disabled = false;
+      }, 15000);
+    }
+    function checkGame(){
+      const typed = ans.value.toLowerCase().split(/[,\n]+/).map(s=>s.trim()).filter(Boolean);
+      const set = new Set(current);
+      let hits = 0; const found=[]; const missed=[];
+      typed.forEach(w=>{ if(set.has(w)){ hits++; found.push(w); set.delete(w);} });
+      set.forEach(w=>missed.push(w));
+      const pct = current.length? Math.round((hits/current.length)*100):0;
+      res.innerHTML = `<strong>Pontuação:</strong> ${hits}/${current.length} (${pct}%).<br>`+
+        `<span class="muted">Acertou: ${found.join(', ') || '—'} | Faltou: ${missed.join(', ') || '—'}</span>`;
+    }
+    startBtn.addEventListener('click', startGame);
+    checkBtn.addEventListener('click', checkGame);
+
+    // Exercício 2 — Pares
+    const pairs = document.getElementById('pairs');
+    const newPairs = document.getElementById('newPairs');
+    const togglePairs = document.getElementById('togglePairs');
+    let visiblePairs = true;
+    const left = ['casa','livro','sol','cachorro','montanha','relógio','avião','flor','pão','guitarra'];
+    const right = ['memória','força','alegria','coragem','foco','paz','esperança','amizade','sabedoria','energia'];
+    function genPairs(){
+      const out = [];
+      const used = new Set();
+      for(let i=0;i<6;i++){
+        const a = left[Math.floor(Math.random()*left.length)];
+        let b = right[Math.floor(Math.random()*right.length)];
+        let guard=0;
+        while(used.has(b) && guard<20){ b = right[Math.floor(Math.random()*right.length)]; guard++; }
+        used.add(b);
+        out.push([a,b]);
+      }
+      pairs.innerHTML = out.map(([a,b])=>
+        `<div style="border:1px solid rgba(255,255,255,.12); padding:12px; border-radius:12px; background:rgba(255,255,255,.04)"><strong>${a}</strong> ↔ <strong>${b}</strong><div class="muted">Crie uma cena absurda unindo os dois (ex.: ${a} tocando ${b}).</div></div>`
+      ).join('');
+      visiblePairs = true;
+    }
+    function togglePairsFn(){
+      visiblePairs = !visiblePairs;
+      pairs.style.visibility = visiblePairs ? 'visible' : 'hidden';
+    }
+    newPairs.addEventListener('click', genPairs);
+    togglePairs.addEventListener('click', togglePairsFn);
+    genPairs();
+  </script>
+</body>
 </html>
